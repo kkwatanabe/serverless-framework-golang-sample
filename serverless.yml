@@ -19,7 +19,7 @@ package:
    - ./bin/**
 
 functions:
-  sk-bot:
+  line-bot:
     handler: bin/line-bot
     events:
       - http:
