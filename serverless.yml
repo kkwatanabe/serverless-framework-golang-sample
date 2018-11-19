@@ -1,0 +1,28 @@
+service: serverless-framework-golang-sample
+
+frameworkVersion: ">=1.28.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: go1.x
+  stage: dev
+  region: ap-northeast-1
+
+  # lambdaの環境変数
+  # ${opt:stage}に対応したyamlファイルが存在しない場合、devの値が適用される
+  environment: ${file(environment/env.${opt:stage}.yml), file(environment/env.dev.yml)}
+
+package:
+ exclude:
+   - ./**
+ include:
+   - ./bin/**
+
+functions:
+  sk-bot:
+    handler: bin/line-bot
+    events:
+      - http:
+          path: callback
+          method: post
+          cors: true
